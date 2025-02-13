@@ -18,19 +18,20 @@ public class Person implements UserDetails {
 
 
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column
+    private String firstName;
+
+    @Column
+    private String lastName;
 
     @Column(name = "username")
     private String userName;
 
     @Column(name = "password")
     private String password;
-
-    private String email;
-
-//    @Transient
-//    private String passwordConfirm;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
@@ -39,10 +40,11 @@ public class Person implements UserDetails {
 
     }
 
-    public Person(String lastName, String userName, String email, long number) {
-        this.password = lastName;
-        this.userName = userName;
-        this.email = email;
+    public Person(String firstName, String lastName,  String email , String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userName = email;
+        this.password = password;
     }
 
     public long getId() {
@@ -63,6 +65,7 @@ public class Person implements UserDetails {
         this.password = password;
     }
 
+    @Override
     public String getUsername() {
         return this.userName;
     }
@@ -71,19 +74,28 @@ public class Person implements UserDetails {
         this.userName = username;
     }
 
-    public String getEmail() {
-        return email;
+
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public Set<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles){
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 
@@ -117,9 +129,10 @@ public class Person implements UserDetails {
     public String toString() {
         return "Person{" +
                 "id=" + id +
-                ", userName='" + userName + '\'' +
+                ", firstname='" + firstName + '\'' +
+                ", lastname='" + lastName + '\'' +
                 ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
+                ", email='" + userName + '\'' +
                 ", roles=" + roles +
                 '}';
     }

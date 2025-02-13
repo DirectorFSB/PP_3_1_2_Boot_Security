@@ -20,7 +20,7 @@ public interface UserService {
 
     Person getUserByUsername(String username);
 
-   Set<Role> getRoles();
+    Set<Role> getRoles();
 
-   Role getRoleById(String id);
+    Role getRoleById(String id);
 }

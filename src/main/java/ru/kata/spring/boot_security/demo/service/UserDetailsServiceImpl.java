@@ -2,6 +2,7 @@ package ru.kata.spring.boot_security.demo.service;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.kata.spring.boot_security.demo.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,25 +18,27 @@ import java.util.function.Function;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     private UserDao dao;
-    private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(16);
+    private PasswordEncoder pswdEncoder;
 
-    public UserDetailsServiceImpl(){
+    public UserDetailsServiceImpl() {
 
     }
+
     @Autowired
-    public UserDetailsServiceImpl(UserDao userDao){
+    public UserDetailsServiceImpl(UserDao userDao, PasswordEncoder pswdEncoder) {
         this.dao = userDao;
+        this.pswdEncoder = pswdEncoder;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Person person = dao.getUserByUsername(username);
-        if(person == null){
+        if (person == null) {
             throw new UsernameNotFoundException("Unknown user :" + username);
         }
-        UserDetails userDetails = User.withDefaultPasswordEncoder()
+        UserDetails userDetails = User.builder()
                 .username(person.getUsername())
-                .password(person.getPassword())
+                .password(pswdEncoder.encode(person.getPassword()))
                 .authorities(person.getRoles())
                 .build();
         return userDetails;

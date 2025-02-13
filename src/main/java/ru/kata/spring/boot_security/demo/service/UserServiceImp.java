@@ -1,6 +1,7 @@
 package ru.kata.spring.boot_security.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.dao.UserDao;
@@ -12,7 +13,7 @@ import java.util.Set;
 
 @Service
 @Transactional
-public class UserServiceImp implements UserService{
+public class UserServiceImp implements UserService {
 
     UserDao userDao;
 
@@ -32,6 +33,7 @@ public class UserServiceImp implements UserService{
         return userDao.listUsers();
     }
 
+    @Transactional
     @Override
     public void update(Person user) {
         userDao.update(user);
@@ -41,8 +43,9 @@ public class UserServiceImp implements UserService{
     public void delete(int id) {
         userDao.delete(id);
     }
+
     @Transactional(readOnly = true)
-    public Person getUserById(int id){
+    public Person getUserById(int id) {
         return userDao.getUserById(id);
     }
 

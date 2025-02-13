@@ -1,13 +1,155 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="en">
 <head>
-    <title>Spring Security Example</title>
+    <meta charset="UTF-8">
+    <title>Users List</title>
+    <!-- Подключение Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            height: 60px;
+        }
+
+        .container1 {
+            margin-left: 250px; /* Отступ под меню */
+            margin-top: 60px; /* Отступ под шапку */
+            padding: 20px;
+        }
+
+        .container2 {
+            margin-left: 250px; /* Отступ под меню */
+            padding: 20px;
+        }
+
+        .about_us {
+            background-color: #f2f2f2;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 60px; /* Отступ под шапку */
+            left: 0;
+            width: 250px;
+            height: calc(100vh - 60px); /* Высота минус шапка */
+            background-color: white;
+            padding-top: 20px;
+        }
+
+        .container1 {
+            margin-left: 250px; /* Отступ под меню */
+            margin-top: 60px; /* Отступ под шапку */
+            padding: 20px;
+        }
+
+        .container2 {
+            margin-left: 250px; /* Отступ под меню */
+            padding: 20px;
+        }
+
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            display: block;
+            background-color: white;
+        }
+
+        .nav-link {
+            padding: 10px;
+            text-decoration: none;
+            color: #007bff;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background-color: #ddd;
+        }
+
+        .nav-link.active {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .container.role {
+
+        }
+    </style>
 </head>
 <body>
-<h1>User, welcome spring boot security page!</h1>
-<form th:action="@{/logout}" method="post">
-    <input type="submit" value="Sign Out"/>
-</form>
 
+
+<header class="bg-dark text-white">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center py-2">
+            <div>
+                <span class="fw-bold " th:text="${principal.username}" sec:authentication="principal.username">Email</span>
+                <span  th:text="${principal.username}" sec:authentication="principal.authorities">with roles:</span>
+            </div>
+            <!-- Логотип -->
+            <!-- Навигационное меню -->
+            <nav>
+                <ul class="nav ">
+
+                    <li class="nav-item ">
+                        <form th:action="@{/logout}" method="post">
+                            <input type="submit" value="Logout" class="btn text-white-50">
+                        </form>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+
+
+<div class="sidebar">
+    <ul class="nav flex-column">
+        <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+            <a class="nav-link" href="/admin">Admin</a>
+        </li>
+        <!-- Вкладка "User" (доступна всем авторизованным пользователям) -->
+        <li class="nav-item ">
+            <a class="nav-link show active" href="/user">User</a>
+        </li>
+        <!-- Вкладка "Admin" (доступна только ADMIN) -->
+    </ul>
+</div>
+
+<div class="bg-light">
+    <div class="container1 mt-0">
+        <h1 class="my-4">User information-page</h1>
+        <div class="about_us border "><h5 class="mt-2 mb-2 ms-3">
+            About user</h5>
+        </div>
+        <div class="container2 bg-white ms-0 border ">
+            <table class="table mt-3 table-striped table-bordered">
+                <thead class="table-white">
+                <tr>
+                    <th>ID</th>
+                    <th>FirstName</th>
+                    <th>LastName</th>
+                    <th>Email</th>
+                    <th>Roles</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user : ${user}">
+                    <td th:text="${user.id}">id</td>
+                    <td th:text="${user.firstName}">id</td>
+                    <td th:text="${user.lastName}">id</td>
+                    <td th:text="${user.username}">Email</td>
+                    <td th:text="${user.getAuthorities()}">role</td>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Подключение Bootstrap JS (необходим для некоторых компонентов) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
