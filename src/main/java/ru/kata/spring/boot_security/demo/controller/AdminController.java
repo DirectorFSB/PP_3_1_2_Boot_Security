@@ -12,12 +12,12 @@ import java.security.Principal;
 
 @Controller
 @RequestMapping(value = "/admin")
-public class UsersController {
+public class AdminController {
 
     private UserService userService;
 
     @Autowired
-    public UsersController(UserService userService) {
+    public AdminController(UserService userService) {
         this.userService = userService;
     }
 
@@ -39,8 +39,9 @@ public class UsersController {
 
 
     @GetMapping(value = "/new")
-    public String newUser(Model model) {
+    public String newUser(Model model, Principal principal) {
         model.addAttribute("user", new Person());
+        model.addAttribute("princ", principal);
 
         return "new";
     }

@@ -85,8 +85,8 @@
     <div class="container">
         <div class="d-flex justify-content-between align-items-center py-2">
             <div>
-                <span class="fw-bold " th:text="${principal.username}" sec:authentication="principal.username">Email</span>
-                <span  th:text="${principal.username}" sec:authentication="principal.authorities">with roles:</span>
+                <span class="fw-bold "  sec:authentication="principal.username">Email</span>
+                <span  sec:authentication="principal.authorities">with roles:</span>
             </div>
             <!-- Логотип -->
             <!-- Навигационное меню -->
