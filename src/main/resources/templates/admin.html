@@ -78,9 +78,9 @@
     <div class="container">
         <div class="d-flex justify-content-between align-items-center py-3">
             <div>
-                <span class="fw-bold" sec:authentication="principal.username" >Email</span>
-                <span  >with roles:</span>
-                <span  sec:authentication="principal.authorities"></span>
+                <span class="fw-bold" sec:authentication="principal.username">Email</span>
+                <span>with roles:</span>
+                <span sec:authentication="principal.authorities"></span>
             </div>
             <!-- Навигационное меню -->
             <nav>
@@ -125,7 +125,7 @@
                 </button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="new-user-tab" data-bs-toggle="tab" data-bs-target="#new-user" type="button"
+                <button class="nav-link " id="new-user-tab" data-bs-toggle="tab" data-bs-target="#new-user" type="button"
                         role="tab" aria-controls="new-user" aria-selected="false">
                     New User
                 </button>
@@ -152,221 +152,456 @@
                             <th>Delete</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr th:each="user : ${users}">
-                            <td th:text="${user.id}">id</td>
-                            <td th:text="${user.firstName}">id</td>
-                            <td th:text="${user.lastName}">id</td>
-                            <td th:text="${user.username}">Email</td>
-                            <td th:text="${user.getAuthorities()}">role</td>
-                            <td>
-                                <button type="button" class="btn btn-info text-white btn-sm"
-                                        data-bs-toggle="modal"
-                                        th:data-bs-target="'#editModal-' + ${user.id}">
-                                    Edit
-                                </button>
-                                <!-- Модальное окно для редактирования -->
-                                <div>
-                                    <div class="modal fade" th:id="'editModal-' + ${user.id}" tabindex="-1"
-                                         aria-labelledby="editModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">Edit User</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                            aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <form th:action="@{/admin/update}" th:object="${user}"
-                                                          method="POST">
-                                                        <!-- Скрытое поле с ID пользователя -->
-                                                        <div class="mb-3">
-                                                            <label class="form-label ">ID:</label>
-                                                            <input type="text" class="form-control" name="id"
-                                                                   disabled th:value="${user.id}"/>
-                                                            <input type="hidden" name="id" th:value="${user.id}"/>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label class="form-label">Firstname:</label>
-                                                            <input type="text" class="form-control" name="firstName"
-                                                                   th:value="${user.firstName}" required
-                                                                   placeholder="Firstname">
-                                                        </div>
-
-                                                        <div class="mb-3">
-                                                            <label class="form-label">Lastname:</label>
-                                                            <input type="text" class="form-control" name="lastName"
-                                                                   th:value="${user.lastName}" required
-                                                                   placeholder="Lastname">
-                                                        </div>
-
-                                                        <div class="mb-3">
-                                                            <label class="form-label">Email:</label>
-                                                            <input type="text" class="form-control" name="username"
-                                                                   th:value="${user.username}" required
-                                                                   placeholder="Username">
-                                                        </div>
-
-
-                                                        <div class="mb-3">
-                                                            <label class="form-label">Password:</label>
-                                                            <input type="password" class="form-control" name="password"
-                                                                   th:field="${user.password}" required
-                                                                   placeholder="Password">
-                                                        </div>
-
-                                                        <div class="mb-3">
-                                                            <label class="form-label">Roles:</label>
-                                                            <select class="form-select" name="roles"
-                                                                    th:value="${user.roles}" multiple>
-                                                                <option th:each="role : ${roles1}"
-                                                                        th:value="${role.id}"
-                                                                        th:text="${role.name}">
-                                                                </option>
-                                                            </select>
-                                                        </div>
-
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                    data-bs-dismiss="modal">Cancel
-                                                            </button>
-                                                            <button type="submit" class="btn btn-primary">Save changes
-                                                            </button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-danger text-white btn-sm"
-                                        data-bs-toggle="modal"
-                                        th:data-bs-target="'#deleteModal-' + ${user.id}">
-                                    Delete
-                                </button>
-                                <!-- Модальное окно для удаления -->
-                                <div>
-                                    <div class="modal fade" th:id="'deleteModal-' + ${user.id}" tabindex="-1"
-                                         aria-labelledby="deleteModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">Edit User</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                            aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <form th:action="@{/admin/delete}" th:object="${user}"
-                                                          method="POST">
-                                                        <!-- Скрытое поле с ID пользователя -->
-                                                        <div class="mb-3">
-                                                            <label class="form-label ">ID:</label>
-                                                            <input type="text" class="form-control " name="id" disabled
-                                                                   th:value="${user.id}"/>
-                                                            <input type="hidden" name="id" th:value="${user.id}"/>
-                                                        </div>
-
-
-                                                        <div class="mb-3">
-                                                            <label class="form-label">FirstName:</label>
-                                                            <input type="text" class="form-control" name="firstname"
-                                                                   th:value="${user.firstName}" required disabled
-                                                                   placeholder="FirstName">
-                                                        </div>
-
-                                                        <div class="mb-3">
-                                                            <label class="form-label">LastName:</label>
-                                                            <input type="text" class="form-control" name="lastname"
-                                                                   th:value="${user.lastName}" required disabled
-                                                                   placeholder="Lastname">
-                                                        </div>
-
-                                                        <div class="mb-3">
-                                                            <label class="form-label">Email:</label>
-                                                            <input type="text" class="form-control " name="username"
-                                                                   disabled th:value="${user.username}" required>
-                                                        </div>
-
-                                                        <div class="mb-3">
-                                                            <label class="form-label">Roles:</label>
-                                                            <select class="form-select " name="roles" disabled
-                                                                    th:value="${user.roles}" multiple>
-                                                                <option th:each="role : ${roles1}"
-                                                                        th:value="${role.id}"
-                                                                        th:text="${role.name}">
-                                                                </option>
-                                                            </select>
-                                                        </div>
-
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                    data-bs-dismiss="modal">Cancel
-                                                            </button>
-                                                            <button type="submit" class="btn btn-primary">Save changes
-                                                            </button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
+                        <tbody id="usersTableBody">
                         </tbody>
                     </table>
                 </div>
             </div>
+                    <!-- Вкладка для создания нового пользователя -->
+                    <div class="tab-pane fade" id="new-user" role="tabpanel" aria-labelledby="new-user-tab">
+                        <h1 class="my-4">Create New User</h1>
+                        <form id="createUserForm">
+                            <div class="mb-3">
+                                <label for="firstname" class="form-label">FirstName:</label>
+                                <input type="text" class="form-control" id="firstname" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="lastname" class="form-label">LastName:</label>
+                                <input type="text" class="form-control" id="lastname" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Email:</label>
+                                <input type="email" class="form-control" id="username" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password:</label>
+                                <input type="password" class="form-control" id="password" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="roles" class="form-label">Roles:</label>
+                                <select class="form-select" id="roles" multiple="multiple">
+                                    <!-- Роли будут загружаться сюда с помощью JS -->
+                                </select>
+                            </div>
+
+                            <button type="submit" id="btnCreate" class="btn btn-success">Create User</button>
+                        </form>
+                    </div>
+
+                    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Edit User</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="editUserForm" >
+                                        <div class="mb-3">
+                                            <label class="form-label">Id</label>
+                                            <input type="text" class="form-control" id="editId" required
+                                                   placeholder="Firstname" disabled>
+                                            <input type="hidden" id="editIdHidden">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Firstname:</label>
+                                            <input type="text" class="form-control" id="editFirstName" required
+                                                   placeholder="Firstname">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Lastname:</label>
+                                            <input type="text" class="form-control" id="editLastName" required
+                                                   placeholder="Lastname">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Email:</label>
+                                            <input type="text" class="form-control" id="editUsername" required
+                                                   placeholder="Username">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Password:</label>
+                                            <input type="password" class="form-control" id="editPassword" required
+                                                   placeholder="Password">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Roles:</label>
+                                            <select class="form-select" id="editRoles" multiple>
+                                            </select>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                Cancel
+                                            </button>
+                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Delete User</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="deleteUserForm">
+                                        <div class="mb-3">
+                                            <label class="form-label">Id</label>
+                                            <input disabled type="text" class="form-control" id="deleteId" required
+                                                   placeholder="id">
+                                            <input type="hidden" id="deleteIdHidden">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Firstname:</label>
+                                            <input disabled type="text" class="form-control" id="deleteFirstName"
+                                                   required placeholder="Firstname">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Lastname:</label>
+                                            <input disabled type="text" class="form-control" id="deleteLastName"
+                                                   required placeholder="Lastname">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Email:</label>
+                                            <input disabled type="text" class="form-control" id="deleteUsername"
+                                                   required placeholder="Username">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Password:</label>
+                                            <input disabled type="password" class="form-control" id="deletePassword"
+                                                   required placeholder="Password">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Roles:</label>
+                                            <select disabled class="form-select" id="deleteRoles" multiple>
+
+                                            </select>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                Cancel
+                                            </button>
+                                            <button type="button" id="confirmDeleteButton" class="btn btn-danger">
+                                                Delete
+                                            </button>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+            </div>
         </div>
 
-        <!-- Вкладка для создания нового пользователя -->
-        <div class="tab-pane fade" id="new-user" role="tabpanel" aria-labelledby="new-user-tab">
-            <h1 class="my-4">Create New User</h1>
-            <form th:method="POST" th:action="@{/admin}" th:object="${user}">
-                <!-- Поле для имени пользователя -->
-                <div class="mb-3">
-                    <label for="firstname" class="form-label">FirstName:</label>
-                    <input type="text" class="form-control" th:field="*{firstName}" id="firstname" required>
 
-                </div>
-                <div class="mb-3">
-                    <label for="lastname" class="form-label">LastName:</label>
-                    <input type="text" class="form-control" th:field="*{lastName}" id="lastname" required>
-                </div>
-                <div class="mb-3">
-                    <label for="username" class="form-label">Email:</label>
-                    <input type="email" class="form-control" th:field="*{username}" id="username" required>
-                </div>
 
-                <!-- Поле для пароля -->
-                <div class="mb-3">
-                    <label for="password" class="form-label">Password:</label>
-                    <input type="password" class="form-control" th:field="*{password}" id="password" required>
-                </div>
-
-                <!-- Поле для email -->
-
-                <!-- Поле для выбора ролей -->
-                <div class="mb-3">
-                    <label for="roles" class="form-label">Roles:</label>
-                    <select class="form-select" id="roles" multiple="multiple" th:field="*{roles}">
-                        <option th:each="role : ${roles1}"
-                                th:value="${role.id}"
-                                th:text="${role.name}">
-                        </option>
-                    </select>
-                </div>
-
-                <!-- Кнопка для отправки формы -->
-                <button type="submit" class="btn btn-success">Create User</button>
-                <a th:href="@{/admin}" class="btn btn-secondary">Cancel</a>
-            </form>
-        </div>
     </div>
 </div>
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<script>
+    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+
+    function asd() {
+        // Загрузка данных пользователей
+        fetch('admin/api/users') // Замените на ваш API-эндпоинт
+            .then(response => response.json())
+            .then(users => {
+                const tbody = document.getElementById('usersTableBody');
+                tbody.innerHTML = ''; // Очистка таблицы перед заполнением
+
+                users.forEach(user => {
+                    const row = document.createElement('tr');
+
+                    // ID
+                    const idCell = document.createElement('td');
+                    idCell.textContent = user.id;
+                    row.appendChild(idCell);
+
+                    // FirstName
+                    const firstNameCell = document.createElement('td');
+                    firstNameCell.textContent = user.firstName;
+                    row.appendChild(firstNameCell);
+
+                    // LastName
+                    const lastNameCell = document.createElement('td');
+                    lastNameCell.textContent = user.lastName;
+                    row.appendChild(lastNameCell);
+
+                    // Email (username)
+                    const emailCell = document.createElement('td');
+                    emailCell.textContent = user.username;
+                    row.appendChild(emailCell);
+
+                    // Roles
+                    const rolesCell = document.createElement('td');
+                    rolesCell.textContent = user.roles.map(role => role.name).join(', ');
+                    row.appendChild(rolesCell);
+
+                    // Edit Button
+                    const editCell = document.createElement('td');
+                    const editButton = document.createElement('button');
+                    editButton.className = 'btn btn-info btnEdit text-white btn-sm';
+                    editButton.textContent = 'Edit';
+                    editButton.setAttribute('data-user-id', user.id);
+                    editButton.setAttribute('data-bs-toggle', 'modal');
+                    editButton.setAttribute('data-bs-target', '#editModal');
+                    editCell.appendChild(editButton);
+                    row.appendChild(editCell);
+
+                    // Delete Button
+                    const deleteCell = document.createElement('td');
+                    const deleteButton = document.createElement('button');
+                    deleteButton.className = 'btn btn-danger btnDelete text-white btn-sm';
+                    deleteButton.textContent = 'Delete';
+                    deleteButton.setAttribute('data-user-id', user.id);
+                    deleteButton.setAttribute('data-bs-toggle', 'modal');
+                    deleteButton.setAttribute('data-bs-target', '#deleteModal');
+                    deleteCell.appendChild(deleteButton);
+                    row.appendChild(deleteCell);
+
+                    // Добавление строки в таблицу
+                    tbody.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Error loading users:', error));
+    }
+
+
+
+    //Функция для заполнения ролей
+    function getRoles() {
+        fetch('/admin/roles', {
+            method: 'GET',
+            headers: {
+                'X-CSRF-TOKEN': csrfToken
+            }
+        })
+            .then(response => response.json())
+            .then(roles => {
+                const rolesSelect = document.getElementById('roles');
+                rolesSelect.innerHTML = '';
+                roles.forEach(role => {
+                    const option = document.createElement('option');
+                    option.value = role.id;
+                    option.textContent = role.name;
+                    rolesSelect.appendChild(option);
+                });
+            })
+
+            .catch(error => console.error('Error loading roles:', error));
+    }
+
+
+
+    //вызов функции заполнения таблицы каждый раз при открытии страницы
+    document.addEventListener('DOMContentLoaded', asd);
+
+
+
+    // Заполнение формы модального окна редактирования
+    document.addEventListener('click', function (event) {
+        if (event.target.classList.contains('btnEdit')) {
+            const userId = event.target.getAttribute('data-user-id');
+
+            // Загрузка данных пользователя
+            fetch(`admin/api/user?id=${userId}`)
+                .then(response => response.json())
+                .then(user => {
+                    // Заполнение модального окна
+                    document.getElementById('editId').value = user.id;
+                    document.getElementById('editIdHidden').value = user.id;
+                    document.getElementById('editFirstName').value = user.firstName;
+                    document.getElementById('editLastName').value = user.lastName;
+                    document.getElementById('editUsername').value = user.username;
+                    document.getElementById('editPassword').value = ''; // Пароль обычно не отображается
+
+                    // Заполнение ролей
+                    fetch('/admin/roles') // URL вашего API
+                        .then(response => response.json())
+                        .then(roles => {
+                            const rolesSelect = document.getElementById('editRoles');
+                            rolesSelect.innerHTML = ''; // Очищаем список перед заполнением
+
+                            // Добавляем каждую роль в выпадающий список
+                            roles.forEach(role => {
+                                const option = document.createElement('option');
+                                option.value = role.id; // Значение роли (ID)
+                                option.textContent = role.name; // Отображаемое имя роли
+                                rolesSelect.appendChild(option);
+                            });
+                        })
+                })
+                .catch(error => console.error('Error loading user:', error));
+        }
+    });
+
+    // Обработка отправки формы редактирования
+    document.getElementById('editUserForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+
+        const userId = document.getElementById('editIdHidden').value;
+        const firstName = document.getElementById('editFirstName').value;
+        const lastName = document.getElementById('editLastName').value;
+        const username = document.getElementById('editUsername').value;
+        const password = document.getElementById('editPassword').value;
+        const roles = Array.from(document.getElementById('editRoles').selectedOptions).map(option => option.value);
+
+        fetch(`admin/update`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken // CSRF-токен для безопасности
+            },
+            body: JSON.stringify({
+                id: userId,
+                firstName: firstName,
+                lastName: lastName,
+                username: username,
+                password: password,
+                roles: roles.map(roleId => ({ id: roleId }))
+            }),
+        })
+            .then(response => {
+                // Закрытие модального окна с использованием Bootstrap
+                const modal = bootstrap.Modal.getInstance(document.getElementById('editModal'));
+                modal.hide(); // Закрываем модальное окно
+                asd.call()
+
+            })
+            .catch(error => console.error('Error updating user:', error));
+    });
+
+
+
+
+
+    // Обработка формы удаления
+    document.addEventListener('click', function (event) {
+        if (event.target.classList.contains('btnDelete')) {
+            const userId = event.target.getAttribute('data-user-id');
+            fetch(`admin/api/user?id=${userId}`)
+                .then(response => response.json())
+                .then(user => {
+                    // Установка ID пользователя в скрытое поле
+                    document.getElementById('deleteId').value = user.id;
+                    document.getElementById('deleteIdHidden').value = user.id;
+                    document.getElementById('deleteFirstName').value = user.firstName;
+                    document.getElementById('deleteLastName').value = user.lastName;
+                    document.getElementById('deleteUsername').value = user.username;
+                    document.getElementById('deletePassword').value = ''; // Пароль обычно не отображается
+                    // Заполнение ролей
+                    const rolesSelect = document.getElementById('deleteRoles');
+                    rolesSelect.innerHTML = ''; // Очистка списка ролей
+                    user.roles.forEach(role => {
+                        const option = document.createElement('option');
+                        option.value = role.id;
+                        option.textContent = role.name;
+                        rolesSelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Error updating user:', error));
+
+        }
+    });
+
+    // Обработка подтверждения удаления
+    document.getElementById('confirmDeleteButton').addEventListener('click', function () {
+        const userId = document.getElementById('deleteIdHidden').value;
+
+        fetch(`admin/delete/${userId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken
+            }
+
+        })
+            .then(response => {
+                    // Закрытие модального окна с использованием Bootstrap
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('deleteModal'));
+                    modal.hide(); // Закрываем модальное окно
+                    asd.call()
+
+            })
+            .catch(error => console.error('Error deleting user:', error));
+    });
+
+
+
+
+
+    //Обработка формы добавления нового пользователя
+
+    //Добавление списка ролей
+    // document.getElementById('new-user-tab').addEventListener('click', getRoles);
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // Загрузка ролей
+        getRoles();
+
+        // Обработка отправки формы
+        const form = document.getElementById('createUserForm');
+        if (form) {
+            form.addEventListener('submit', function (event) {
+                event.preventDefault(); // Отключаем стандартное поведение формы
+
+                // Собираем данные из формы
+                const firstName = document.getElementById('firstname').value;
+                const lastName = document.getElementById('lastname').value;
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                const roles = Array.from(document.getElementById('roles').selectedOptions).map(option => option.value);
+
+                // Отправляем данные на сервер
+                fetch('/admin', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    body: JSON.stringify({
+                        firstName: firstName,
+                        lastName: lastName,
+                        username: username,
+                        password: password,
+                        roles: roles.map(roleId => ({ id: roleId }))
+                    })
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            alert('Пользователь успешно создан!');
+                            form.reset(); // Очищаем форму
+                        } else {
+                            throw new Error('Ошибка при создании пользователя');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error creating user:', error);
+                        alert('Ошибка при создании пользователя');
+                    });
+            });
+        } else {
+            console.error('Элемент с id="createUserForm" не найден');
+        }
+    });
+
+
+</script>
+
 <!-- Подключение Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </body>
 </html>
