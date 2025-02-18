@@ -14,7 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class WebSecurityConfig {
     private final SuccessUserHandler successUserHandler;
 
-        public WebSecurityConfig(SuccessUserHandler successUserHandler) {
+    public WebSecurityConfig(SuccessUserHandler successUserHandler) {
         this.successUserHandler = successUserHandler;
     }
 
@@ -29,17 +29,16 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/" , "/login").permitAll()
+                        .requestMatchers("/", "/login").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
 
                 .formLogin((form) -> form.loginPage("/login")
                         .successHandler(successUserHandler)
                         .permitAll())
-                .logout((logout)-> logout.permitAll());
+                .logout((logout) -> logout.permitAll());
         return http.build();
     }
-
 
 
 }

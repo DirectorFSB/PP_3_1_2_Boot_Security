@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping( "/admin/")
+@RequestMapping("/admin/")
 public class AdminController {
 
     private PersonService personService;
@@ -24,21 +24,17 @@ public class AdminController {
     private RoleService roleService;
 
     @Autowired
-    public AdminController(PersonService personService , RoleService roleService) {
+    public AdminController(PersonService personService, RoleService roleService) {
         this.personService = personService;
         this.roleService = roleService;
     }
-
-//    @GetMapping()
-//    public ModelAndView adminPage() {
-//        return new ModelAndView("admin");
-//    }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable int id) {
         personService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     @GetMapping("/roles")
     public ResponseEntity<Set<Role>> delete() {
         return ResponseEntity.ok(roleService.getRoles());
@@ -56,12 +52,14 @@ public class AdminController {
         personService.update(person);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     @GetMapping("/api/users")
-    public List<Person> usersList(){
+    public List<Person> usersList() {
         return personService.listUsers();
     }
+
     @GetMapping("/api/user")
-    public Person userById(@RequestParam(value = "id")int id){
+    public Person userById(@RequestParam(value = "id") int id) {
         return personService.getUserById(id);
     }
 

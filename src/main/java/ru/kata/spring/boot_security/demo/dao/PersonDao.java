@@ -21,5 +21,4 @@ public interface PersonDao {
     Person getUserByUsername(String username);
 
 
-
 }

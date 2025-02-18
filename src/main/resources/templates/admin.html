@@ -125,7 +125,8 @@
                 </button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link " id="new-user-tab" data-bs-toggle="tab" data-bs-target="#new-user" type="button"
+                <button class="nav-link " id="new-user-tab" data-bs-toggle="tab" data-bs-target="#new-user"
+                        type="button"
                         role="tab" aria-controls="new-user" aria-selected="false">
                     New User
                 </button>
@@ -157,156 +158,155 @@
                     </table>
                 </div>
             </div>
-                    <!-- Вкладка для создания нового пользователя -->
-                    <div class="tab-pane fade" id="new-user" role="tabpanel" aria-labelledby="new-user-tab">
-                        <h1 class="my-4">Create New User</h1>
-                        <form id="createUserForm">
-                            <div class="mb-3">
-                                <label for="firstname" class="form-label">FirstName:</label>
-                                <input type="text" class="form-control" id="firstname" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="lastname" class="form-label">LastName:</label>
-                                <input type="text" class="form-control" id="lastname" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="username" class="form-label">Email:</label>
-                                <input type="email" class="form-control" id="username" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Password:</label>
-                                <input type="password" class="form-control" id="password" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="roles" class="form-label">Roles:</label>
-                                <select class="form-select" id="roles" multiple="multiple">
-                                    <!-- Роли будут загружаться сюда с помощью JS -->
-                                </select>
-                            </div>
-
-                            <button type="submit" id="btnCreate" class="btn btn-success">Create User</button>
-                        </form>
+            <!-- Вкладка для создания нового пользователя -->
+            <div class="tab-pane fade" id="new-user" role="tabpanel" aria-labelledby="new-user-tab">
+                <h1 class="my-4">Create New User</h1>
+                <form id="createUserForm">
+                    <div class="mb-3">
+                        <label for="firstname" class="form-label">FirstName:</label>
+                        <input type="text" class="form-control" id="firstname" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="lastname" class="form-label">LastName:</label>
+                        <input type="text" class="form-control" id="lastname" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Email:</label>
+                        <input type="email" class="form-control" id="username" required>
                     </div>
 
-                    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel"
-                         aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">Edit User</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <form id="editUserForm" >
-                                        <div class="mb-3">
-                                            <label class="form-label">Id</label>
-                                            <input type="text" class="form-control" id="editId" required
-                                                   placeholder="Firstname" disabled>
-                                            <input type="hidden" id="editIdHidden">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Firstname:</label>
-                                            <input type="text" class="form-control" id="editFirstName" required
-                                                   placeholder="Firstname">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Lastname:</label>
-                                            <input type="text" class="form-control" id="editLastName" required
-                                                   placeholder="Lastname">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Email:</label>
-                                            <input type="text" class="form-control" id="editUsername" required
-                                                   placeholder="Username">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Password:</label>
-                                            <input type="password" class="form-control" id="editPassword" required
-                                                   placeholder="Password">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Roles:</label>
-                                            <select class="form-select" id="editRoles" multiple>
-                                            </select>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                Cancel
-                                            </button>
-                                            <button type="submit" class="btn btn-primary">Save changes</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password:</label>
+                        <input type="password" class="form-control" id="password" required>
                     </div>
 
-                    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
-                         aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">Delete User</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <form id="deleteUserForm">
-                                        <div class="mb-3">
-                                            <label class="form-label">Id</label>
-                                            <input disabled type="text" class="form-control" id="deleteId" required
-                                                   placeholder="id">
-                                            <input type="hidden" id="deleteIdHidden">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Firstname:</label>
-                                            <input disabled type="text" class="form-control" id="deleteFirstName"
-                                                   required placeholder="Firstname">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Lastname:</label>
-                                            <input disabled type="text" class="form-control" id="deleteLastName"
-                                                   required placeholder="Lastname">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Email:</label>
-                                            <input disabled type="text" class="form-control" id="deleteUsername"
-                                                   required placeholder="Username">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Password:</label>
-                                            <input disabled type="password" class="form-control" id="deletePassword"
-                                                   required placeholder="Password">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Roles:</label>
-                                            <select disabled class="form-select" id="deleteRoles" multiple>
-
-                                            </select>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                Cancel
-                                            </button>
-                                            <button type="button" id="confirmDeleteButton" class="btn btn-danger">
-                                                Delete
-                                            </button>
-                                        </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="mb-3">
+                        <label for="roles" class="form-label">Roles:</label>
+                        <select class="form-select" id="roles" multiple="multiple">
+                            <!-- Роли будут загружаться сюда с помощью JS -->
+                        </select>
                     </div>
 
-
+                    <button type="submit" id="btnCreate" class="btn btn-success">Create User</button>
+                </form>
             </div>
+
+            <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Edit User</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="editUserForm">
+                                <div class="mb-3">
+                                    <label class="form-label">Id</label>
+                                    <input type="text" class="form-control" id="editId" required
+                                           placeholder="Firstname" disabled>
+                                    <input type="hidden" id="editIdHidden">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Firstname:</label>
+                                    <input type="text" class="form-control" id="editFirstName" required
+                                           placeholder="Firstname">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Lastname:</label>
+                                    <input type="text" class="form-control" id="editLastName" required
+                                           placeholder="Lastname">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Email:</label>
+                                    <input type="text" class="form-control" id="editUsername" required
+                                           placeholder="Username">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Password:</label>
+                                    <input type="password" class="form-control" id="editPassword" required
+                                           placeholder="Password">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Roles:</label>
+                                    <select class="form-select" id="editRoles" multiple>
+                                    </select>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                        Cancel
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Delete User</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="deleteUserForm">
+                                <div class="mb-3">
+                                    <label class="form-label">Id</label>
+                                    <input disabled type="text" class="form-control" id="deleteId" required
+                                           placeholder="id">
+                                    <input type="hidden" id="deleteIdHidden">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Firstname:</label>
+                                    <input disabled type="text" class="form-control" id="deleteFirstName"
+                                           required placeholder="Firstname">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Lastname:</label>
+                                    <input disabled type="text" class="form-control" id="deleteLastName"
+                                           required placeholder="Lastname">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Email:</label>
+                                    <input disabled type="text" class="form-control" id="deleteUsername"
+                                           required placeholder="Username">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Password:</label>
+                                    <input disabled type="password" class="form-control" id="deletePassword"
+                                           required placeholder="Password">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Roles:</label>
+                                    <select disabled class="form-select" id="deleteRoles" multiple>
+
+                                    </select>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                        Cancel
+                                    </button>
+                                    <button type="button" id="confirmDeleteButton" class="btn btn-danger">
+                                        Delete
+                                    </button>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
-
-
-
     </div>
+
+
+</div>
 </div>
 <meta name="_csrf" th:content="${_csrf.token}"/>
 <script>
@@ -378,7 +378,6 @@
     }
 
 
-
     //Функция для заполнения ролей
     function getRoles() {
         fetch('/admin/roles', {
@@ -403,10 +402,8 @@
     }
 
 
-
     //вызов функции заполнения таблицы каждый раз при открытии страницы
     document.addEventListener('DOMContentLoaded', getAllUsers);
-
 
 
     // Заполнение формы модального окна редактирования
@@ -470,7 +467,7 @@
                 lastName: lastName,
                 username: username,
                 password: password,
-                roles: roles.map(roleId => ({ id: roleId }))
+                roles: roles.map(roleId => ({id: roleId}))
             }),
         })
             .then(response => {
@@ -482,9 +479,6 @@
             })
             .catch(error => console.error('Error updating user:', error));
     });
-
-
-
 
 
     // Обработка формы удаления
@@ -529,17 +523,14 @@
 
         })
             .then(response => {
-                    // Закрытие модального окна с использованием Bootstrap
-                    const modal = bootstrap.Modal.getInstance(document.getElementById('deleteModal'));
-                    modal.hide(); // Закрываем модальное окно
-                    getAllUsers.call()
+                // Закрытие модального окна с использованием Bootstrap
+                const modal = bootstrap.Modal.getInstance(document.getElementById('deleteModal'));
+                modal.hide(); // Закрываем модальное окно
+                getAllUsers.call()
 
             })
             .catch(error => console.error('Error deleting user:', error));
     });
-
-
-
 
 
     //Обработка формы добавления нового пользователя
@@ -573,7 +564,7 @@
                         lastName: lastName,
                         username: username,
                         password: password,
-                        roles: roles.map(roleId => ({ id: roleId }))
+                        roles: roles.map(roleId => ({id: roleId}))
                     })
 
                 })
@@ -590,7 +581,7 @@
         }
     });
 
-    document.getElementById('adminTabs').addEventListener('click', function (){
+    document.getElementById('adminTabs').addEventListener('click', function () {
         getAllUsers()
     })
 

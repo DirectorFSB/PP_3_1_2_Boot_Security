@@ -36,7 +36,7 @@ public class Person implements UserDetails {
 
     }
 
-    public Person(String firstName, String lastName,  String email , String password) {
+    public Person(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.userName = email;
