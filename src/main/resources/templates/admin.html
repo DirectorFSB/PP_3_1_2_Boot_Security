@@ -405,7 +405,7 @@
 
 
     //вызов функции заполнения таблицы каждый раз при открытии страницы
-    document.addEventListener('DOMContentLoaded', asd);
+    document.addEventListener('DOMContentLoaded', getAllUsers);
 
 
 
@@ -544,9 +544,6 @@
 
     //Обработка формы добавления нового пользователя
 
-    //Добавление списка ролей
-    // document.getElementById('new-user-tab').addEventListener('click', getRoles);
-
     document.addEventListener('DOMContentLoaded', function () {
         // Загрузка ролей
         getRoles();
@@ -578,18 +575,24 @@
                         password: password,
                         roles: roles.map(roleId => ({ id: roleId }))
                     })
+
                 })
 
                     .catch(error => {
                         console.error('Error creating user:', error);
                     });
+                document.getElementById('createUserForm').reset();
             });
-            getAllUsers.call()
+
+
         } else {
             console.error('Элемент с id="createUserForm" не найден');
         }
     });
 
+    document.getElementById('adminTabs').addEventListener('click', function (){
+        getAllUsers()
+    })
 
 </script>
 
