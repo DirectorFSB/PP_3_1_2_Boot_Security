@@ -4,66 +4,65 @@ package ru.kata.spring.boot_security.demo.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.kata.spring.boot_security.demo.model.Person;
 import ru.kata.spring.boot_security.demo.model.Role;
-import ru.kata.spring.boot_security.demo.service.UserService;
+import ru.kata.spring.boot_security.demo.service.PersonService;
+import ru.kata.spring.boot_security.demo.service.RoleService;
+import ru.kata.spring.boot_security.demo.service.RoleServiceImp;
 
-import javax.swing.text.View;
-import java.security.Principal;
 import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping( "/admin")
+@RequestMapping( "/admin/")
 public class AdminController {
 
-    private UserService userService;
+    private PersonService personService;
+
+    private RoleService roleService;
 
     @Autowired
-    public AdminController(UserService userService) {
-        this.userService = userService;
+    public AdminController(PersonService personService , RoleService roleService) {
+        this.personService = personService;
+        this.roleService = roleService;
     }
 
-    @GetMapping()
-    public ModelAndView adminPage() {
-        return new ModelAndView("admin");
-    }
+//    @GetMapping()
+//    public ModelAndView adminPage() {
+//        return new ModelAndView("admin");
+//    }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable int id) {
-        userService.delete(id);
+        personService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @GetMapping("/roles")
     public ResponseEntity<Set<Role>> delete() {
-        return ResponseEntity.ok(userService.getRoles());
+        return ResponseEntity.ok(roleService.getRoles());
     }
 
 
     @PostMapping
     public ResponseEntity<Void> create(@RequestBody Person user) {
-        System.out.println(user.toString());
-        userService.add(user);
+        personService.add(user);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/update")
     public ResponseEntity<Void> updateGet(@RequestBody Person person) {
-        System.out.println(person);
-        userService.update(person);
+        personService.update(person);
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @GetMapping("/api/users")
     public List<Person> usersList(){
-        return userService.listUsers();
+        return personService.listUsers();
     }
     @GetMapping("/api/user")
     public Person userById(@RequestParam(value = "id")int id){
-        return userService.getUserById(id);
+        return personService.getUserById(id);
     }
 
 

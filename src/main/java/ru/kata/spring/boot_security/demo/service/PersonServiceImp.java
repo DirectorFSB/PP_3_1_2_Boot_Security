@@ -1,10 +1,9 @@
 package ru.kata.spring.boot_security.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.kata.spring.boot_security.demo.dao.UserDao;
+import ru.kata.spring.boot_security.demo.dao.PersonDao;
 import ru.kata.spring.boot_security.demo.model.Person;
 import ru.kata.spring.boot_security.demo.model.Role;
 
@@ -13,54 +12,46 @@ import java.util.Set;
 
 @Service
 @Transactional
-public class UserServiceImp implements UserService {
+public class PersonServiceImp implements PersonService {
 
-    UserDao userDao;
+    PersonDao personDao;
 
     @Autowired
-    public UserServiceImp(UserDao userDao) {
-        this.userDao = userDao;
+    public PersonServiceImp(PersonDao personDao) {
+        this.personDao = personDao;
     }
 
     @Override
     public void add(Person user) {
-        userDao.add(user);
+        personDao.add(user);
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<Person> listUsers() {
-        return userDao.listUsers();
+        return personDao.listUsers();
     }
 
     @Transactional
     @Override
     public void update(Person user) {
-        userDao.update(user);
+        personDao.update(user);
     }
 
     @Override
     public void delete(int id) {
-        userDao.delete(id);
+        personDao.delete(id);
     }
 
     @Transactional(readOnly = true)
     public Person getUserById(int id) {
-        return userDao.getUserById(id);
+        return personDao.getUserById(id);
     }
 
     @Override
     public Person getUserByUsername(String username) {
-        return userDao.getUserByUsername(username);
+        return personDao.getUserByUsername(username);
     }
 
-    @Override
-    public Set<Role> getRoles() {
-        return userDao.getRoles();
-    }
 
-    @Override
-    public Role getRoleById(String id) {
-        return userDao.getRoleById(id);
-    }
 }

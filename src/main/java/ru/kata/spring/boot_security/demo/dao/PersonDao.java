@@ -1,4 +1,4 @@
-package ru.kata.spring.boot_security.demo.service;
+package ru.kata.spring.boot_security.demo.dao;
 
 import ru.kata.spring.boot_security.demo.model.Person;
 import ru.kata.spring.boot_security.demo.model.Role;
@@ -6,7 +6,7 @@ import ru.kata.spring.boot_security.demo.model.Role;
 import java.util.List;
 import java.util.Set;
 
-public interface UserService {
+public interface PersonDao {
 
     void add(Person user);
 
@@ -20,7 +20,6 @@ public interface UserService {
 
     Person getUserByUsername(String username);
 
-    Set<Role> getRoles();
 
-    Role getRoleById(String id);
+
 }

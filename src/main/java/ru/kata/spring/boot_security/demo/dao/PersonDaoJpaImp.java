@@ -2,21 +2,16 @@ package ru.kata.spring.boot_security.demo.dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.Person;
 import ru.kata.spring.boot_security.demo.model.Role;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Repository
-public class UserDaoJpaImp implements UserDao {
+public class PersonDaoJpaImp implements PersonDao {
 
 
     @PersistenceContext
@@ -55,21 +50,5 @@ public class UserDaoJpaImp implements UserDao {
     public Person getUserByUsername(String username) {
 
         return (Person) entityManager.createQuery("select u from Person u where userName = :username", Person.class).setParameter("username", username).getSingleResult();
-    }
-
-    @Override
-    public Set<Role> getRoles() {
-
-        Set<Role> asd = new HashSet<>();
-        asd.addAll(entityManager.createQuery("select r from Role r").getResultList());
-
-        return asd;
-    }
-
-    @Override
-    public Role getRoleById(String id) {
-
-        List asd = entityManager.createQuery("select r from Role r where id = :id").setParameter("id", Integer.valueOf(id)).getResultList();
-        return (Role) asd.get(0);
     }
 }
